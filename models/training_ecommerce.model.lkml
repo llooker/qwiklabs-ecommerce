@@ -12,16 +12,16 @@ persist_with: training_ecommerce_default_datagroup
 
 label: "E-commerce"
 
-# explore: distribution_centers {}
+ explore: distribution_centers {}
 
-# explore: events {
-#
-#   join: users {
-#     type: left_outer
-#     sql_on: ${events.user_id} = ${users.id} ;;
-#     relationship: many_to_one
-#   }
-# }
+ explore: events {
+
+   join: users {
+     type: left_outer
+     sql_on: ${events.user_id} = ${users.id} ;;
+     relationship: many_to_one
+   }
+ }
 
 explore: inventory_items {
   join: products {
