@@ -1,6 +1,14 @@
 view: order_items {
   sql_table_name: `ecomm.order_items`
-    ;;
+  SELECT
+  order_items.user_id as user_id
+  ,COUNT(distinct order_items.order_id) as lifetime_order_count
+  ,SUM(order_items.sale_price) as lifetime_revenue
+  ,MIN(order_items.created_at) as first_order_date
+  ,MAX(order_items.created_at) as latest_order_date
+  FROM order_items
+  GROUP BY user_id
+  ;;
   drill_fields: [id]
 
   dimension: id {
@@ -8,6 +16,8 @@ view: order_items {
     type: number
     sql: ${TABLE}.id ;;
   }
+
+
 
   dimension_group: created {
     type: time
@@ -22,6 +32,7 @@ view: order_items {
     ]
     sql: ${TABLE}.created_at ;;
   }
+
 
   dimension_group: delivered {
     type: time
@@ -94,10 +105,59 @@ view: order_items {
     sql: ${TABLE}.user_id ;;
   }
 
+  dimension: shipping_days {
+    type: number
+    sql: DATEDIFF(day, ${shipped_date}  ,${delivered_date});;
+  }
+
+
+
   measure: count {
     type: count
     drill_fields: [detail*]
   }
+
+  measure: order_count {
+    description: "A count of unique orders"
+    type: count_distinct
+    sql: ${order_id} ;;
+  }
+
+
+  measure: total_sales {
+    type: sum
+    sql: ${sale_price} ;;
+  }
+
+  measure: average_sales {
+    type: average
+    sql: ${sale_price} ;;
+  }
+
+  measure: total_sales_email_users {
+    type: sum
+    sql: ${sale_price} ;;
+    filters:  {
+      field: users.is_email_source
+      value: "Yes"
+    }
+  }
+
+  measure: percentage_sales_email_source {
+    type: number
+    value_format_name: percent_2
+    sql: 1.0*${total_sales_email_users}
+      /NULLIF(${total_sales}, 0) ;;
+  }
+
+  measure: average_sales_email_source {
+    type: number
+    value_format_name: percent_2
+    sql: 1.0*${total_sales_email_users}
+      /NULLIF(${total_sales}, 0) ;;
+  }
+
+
 
   # ----- Sets of fields for drilling ------
   set: detail {
