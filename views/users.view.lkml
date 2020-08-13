@@ -82,7 +82,7 @@ view: users {
 
   dimension: city_state {
     type: string
-    sql: concat(${state},' ',${city});;
+    sql: concat(${state},', ',${city});;
   }
 
   dimension: zip {
