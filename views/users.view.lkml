@@ -25,6 +25,7 @@ view: users {
     sql: ${TABLE}.country ;;
   }
 
+
   dimension_group: created {
     type: time
     timeframes: [
@@ -72,6 +73,11 @@ view: users {
   dimension: state {
     type: string
     sql: ${TABLE}.state ;;
+  }
+
+  dimension: City_State {
+    type: string
+    sql: ${city} || ‘, ‘ || ${state};;
   }
 
   dimension: traffic_source {
