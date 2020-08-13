@@ -75,11 +75,6 @@ view: users {
     sql: ${TABLE}.state ;;
   }
 
-  dimension: City_State {
-    type: string
-    sql: ${city} || ‘, ‘ || ${state};;
-  }
-
   dimension: traffic_source {
     type: string
     sql: ${TABLE}.traffic_source ;;
@@ -93,5 +88,10 @@ view: users {
   measure: count {
     type: count
     drill_fields: [id, last_name, first_name, events.count, order_items.count]
+  }
+
+  dimension: State_City{
+    type: string
+    sql: ${state}||', '||${city} ;;
   }
 }
