@@ -25,6 +25,7 @@ view: users {
     sql: ${TABLE}.country ;;
   }
 
+
   dimension_group: created {
     type: time
     timeframes: [
@@ -77,6 +78,11 @@ view: users {
   dimension: traffic_source {
     type: string
     sql: ${TABLE}.traffic_source ;;
+  }
+
+  dimension: city_state {
+    type: string
+    sql: concat(${state},' ',${city};;
   }
 
   dimension: zip {
