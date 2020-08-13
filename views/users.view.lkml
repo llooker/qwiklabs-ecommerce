@@ -84,6 +84,19 @@ view: users {
     sql: ${TABLE}.zip ;;
   }
 
+  dimension: City_State{
+    type:  string
+    sql: concate(${city},' ',${state}) ;;
+  }
+
+  dimension_group: shipping {
+
+    type: duration
+    sql_start: timestamp(${TABLE}.shipped_at) ;;
+    sql_end: timestamp(${TABLE}.delivered_at) ;;
+    intervals: [hour, day, week]
+  }
+
   measure: count {
     type: count
     drill_fields: [id, last_name, first_name, events.count, order_items.count]
