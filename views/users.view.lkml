@@ -49,6 +49,11 @@ view: users {
     sql: ${TABLE}.first_name ;;
   }
 
+  dimension: full_name {
+    type: string
+    sql: CONCAT( ${first_name}, ${last_name} );;
+  }
+
   dimension: gender {
     type: string
     sql: ${TABLE}.gender ;;
@@ -87,5 +92,15 @@ view: users {
   measure: count {
     type: count
     drill_fields: [id, last_name, first_name, events.count, order_items.count]
+  }
+
+
+##
+## Derived Dimensions ##
+## Be sure to use BigQuery syntax if you are using Big Query
+  dimension: days_since_signup {
+    type: number
+    sql: DATEDIFF(day, ${created_date},
+    current_date) ;;
   }
 }
