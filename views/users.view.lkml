@@ -49,6 +49,11 @@ view: users {
     sql: ${TABLE}.first_name ;;
   }
 
+  dimension: full_name {
+    type: string
+    sql: ${TABLE}.full_name ;;
+  }
+
   dimension: gender {
     type: string
     sql: ${TABLE}.gender ;;
@@ -84,8 +89,23 @@ view: users {
     sql: ${TABLE}.zip ;;
   }
 
+  dimension: City_State{
+    type: string
+    sql: ${city} || ‘, ‘ || ${state};;
+  }
+
+  dimension_group: shipping {
+
+    type: duration
+    sql_start: timestamp(${TABLE}.shipped_at) ;;
+    sql_end: timestamp(${TABLE}.delivered_at) ;;
+    intervals: [hour, day, week]
+  }
+
   measure: count {
     type: count
     drill_fields: [id, last_name, first_name, events.count, order_items.count]
   }
 }
+
+
