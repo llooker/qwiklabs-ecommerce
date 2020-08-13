@@ -50,6 +50,16 @@ view: products {
     sql: ${TABLE}.sku ;;
   }
 
+  measure: total_cost {
+    type: sum
+    sql: ${cost} ;;
+  }
+
+  measure: average_cost {
+    type: average
+    sql: ${cost} ;;
+    value_format_name: usd
+  }
   measure: count {
     type: count
     drill_fields: [id, name, distribution_centers.name, distribution_centers.id, inventory_items.count]
