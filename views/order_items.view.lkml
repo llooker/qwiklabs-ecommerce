@@ -114,14 +114,16 @@ view: order_items {
   measure: total_sale_price  {
     type: sum
     sql: ${sale_price} ;;
+
   }
 
   measure: average_sale_price  {
     type: average
     sql: ${sale_price} ;;
+
   }
 
-  measure: count_distinct_order  {
+  measure: count_of_orders  {
   description:  "A count of unique orders"
     type: count_distinct
     sql: ${order_id} ;;
