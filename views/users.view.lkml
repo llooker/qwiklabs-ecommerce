@@ -83,6 +83,11 @@ view: users {
     type: zipcode
     sql: ${TABLE}.zip ;;
   }
+  dimension:City_State {
+    type: string
+    sql: CONCAT(${city}}, ‘, ‘, ${state});;
+  }
+
 
   measure: count {
     type: count
