@@ -117,11 +117,26 @@ view: order_items {
     value_format_name: usd
   }
 
+  measure: total_sales_email_users {
+    type: sum
+    sql: ${sale_price} ;;
+    filters:  {
+      field: users.is_email_source
+      value: "Yes"
+    }
+  }
+
   measure: average_sales {
     description: "average sales per order"
     type: average
     sql: ${sale_price} ;;
     value_format_name: usd
+  }
+
+  measure: percentage_sales_email_source {
+    type: percent_of_total
+    value_format_name: decimal_2
+    sql: 1.0*${total_sales_email_users} / NULLIF(${total_sales}, 0) ;;
   }
 
   # ----- Sets of fields for drilling ------
