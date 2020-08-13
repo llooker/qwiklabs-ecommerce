@@ -111,8 +111,8 @@ view: order_items {
     ]
   }
 
-  dimension: date_diff {
+  dimension: shipping_days {
     type: number
-    sql: DATEDIFF( day, ${shipped_raw}, ${delivered_raw}) ;;
+    sql:  DATE_DIFF(${delivered_date}, ${shipped_date}, day) ;;
   }
 }
