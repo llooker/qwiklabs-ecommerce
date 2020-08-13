@@ -106,6 +106,8 @@ view: order_items {
     sql: DATE_DIFF(${delivered_date},${shipped_date},DAY);;
   }
 
+
+
   measure: count {
     type: count
     drill_fields: [detail*]
@@ -114,13 +116,27 @@ view: order_items {
   measure: total_sale_price  {
     type: sum
     sql: ${sale_price} ;;
-
+    value_format_name: usd
   }
 
   measure: average_sale_price  {
     type: average
     sql: ${sale_price} ;;
+    value_format_name: usd
+  }
 
+  measure: total_sales_email_users {
+    type: sum
+    sql: ${sale_price};;
+    filters: [users.is_email: "Yes"]
+    value_format_name: usd
+  }
+
+  measure: percentage_sales_email_source {
+    type: number
+    value_format_name: percent_2
+    sql: 1.0*${total_sales_email_users}
+      /NULLIF(${total_sale_price}, 0) ;;
   }
 
   measure: count_of_orders  {

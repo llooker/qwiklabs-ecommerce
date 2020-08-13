@@ -70,3 +70,14 @@ explore: products {
     relationship: many_to_one
   }
 }
+
+explore: users {
+  label: "Qwiklab"
+  #view_label: "Qwiklab_v"
+
+  join: order_items {
+    type: left_outer
+    sql_on: ${order_items.user_id} = ${users.id} ;;
+    relationship: one_to_many
+  }
+}

@@ -25,6 +25,10 @@ view: users {
     sql: ${TABLE}.country ;;
   }
 
+  dimension: is_email {
+    type: yesno
+    sql: lower(${traffic_source}) = 'email' ;;
+  }
 
   dimension_group: created {
     type: time
