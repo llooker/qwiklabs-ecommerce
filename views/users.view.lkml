@@ -86,7 +86,7 @@ view: users {
 
   dimension: City_State{
     type:  string
-    sql: concate(${city},' ',${state}) ;;
+    sql: concat(${city},' ',${state}) ;;
   }
 
   dimension_group: shipping {
