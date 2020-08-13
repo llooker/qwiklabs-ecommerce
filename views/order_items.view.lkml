@@ -94,9 +94,16 @@ view: order_items {
     sql: ${TABLE}.user_id ;;
   }
 
-  dimension: shipping_days {
+  dimension_group: shipping_days2 {
+    type: duration
+    sql_start: timestamp(${TABLE}.shipped_at) ;;
+    sql_end: timestamp(${TABLE}.delivered_at) ;;
+    intervals: [hour, day, week]
+  }
+
+  dimension: shipping_days1 {
     type: number
-    sql: DATE_DIFF(${delivered_date},${shipped_date},day);;
+    sql: DATE_DIFF(${delivered_date},${shipped_date},DAY);;
   }
 
   measure: count {
