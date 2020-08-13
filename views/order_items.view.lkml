@@ -1,6 +1,8 @@
 view: order_items {
   sql_table_name: `ecomm.order_items`
     ;;
+
+
   drill_fields: [id]
 
   dimension: id {
@@ -123,6 +125,12 @@ view: order_items {
     value_format_name: usd
 #     filters: [users.traffic_source: "Email"]
     filters: [users.traffic_source_is_email: "Yes"]
+  }
+
+  measure: percentage_sales_email_source {
+    type: number
+    value_format_name: percent_2
+    sql: 1.0*${Avg_Sale_price}/NULLIF(${user_id},0) ;;
   }
 
   # ----- Sets of fields for drilling ------
