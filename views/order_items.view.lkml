@@ -111,8 +111,10 @@ view: order_items {
     ]
   }
 
-  dimension: shipping_days {
-    type: number
-    sql:  DATE_DIFF(${delivered_date}, ${shipped_date}, day) ;;
+  dimension_group: shipping {
+    type: duration
+    sql_start: timestamp(${shipped_raw}) ;;
+    sql_end: timestamp(${delivered_raw}) ;;
+    intervals: [hour, day, week]
   }
 }
