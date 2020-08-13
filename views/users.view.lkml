@@ -84,6 +84,23 @@ view: users {
     sql: ${TABLE}.zip ;;
   }
 
+  dimension: citystate {
+    type: string
+    sql: ${city} || ', ' || ${state} ;;
+  }
+
+  dimension: emailtraffic {
+    type: yesno
+    sql: ${traffic_source} = "Email" ;;
+  }
+
+  dimension: agegroup {
+    type: tier
+    tiers: [18, 25, 35, 45, 55, 65, 75, 90]
+    sql: ${age} ;;
+    style: integer
+  }
+
   measure: count {
     type: count
     drill_fields: [id, last_name, first_name, events.count, order_items.count]
