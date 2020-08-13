@@ -96,7 +96,7 @@ view: order_items {
 
   dimension: shipping_days {
     type: number
-    sql: DATE_DIFF(${shipped_date}, ${delivered_date},day);;
+    sql: DATE_DIFF(${delivered_date},${shipped_date},day);;
   }
 
   measure: count {
