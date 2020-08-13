@@ -14,6 +14,10 @@ view: users {
     sql: ${TABLE}.age ;;
   }
 
+  dimension: is_over_30 {
+    type: yesno
+    sql: ${age}>30 ;;
+  }
   dimension: city {
     type: string
     sql: ${TABLE}.city ;;
@@ -93,4 +97,15 @@ view: users {
     type: count
     drill_fields: [id, last_name, first_name, events.count, order_items.count]
   }
+
+  measure: count_female_users {
+    type:  count
+    filters: [gender: "Female"]
+}
+
+  measure: percent_female_users {
+    type:  number
+    sql: ${count_female_users / ${count} ;;
+    value_format_name: percent_2
+    }
 }
