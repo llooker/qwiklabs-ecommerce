@@ -110,6 +110,20 @@ view: order_items {
     sql: ${inventory_item_id} ;;
   }
 
+  measure: total_sales {
+    description: "total of sale_price"
+    type: sum
+    sql: ${sale_price} ;;
+    value_format_name: usd
+  }
+
+  measure: average_sales {
+    description: "average sales per order"
+    type: average
+    sql: ${sale_price} ;;
+    value_format_name: usd
+  }
+
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [
