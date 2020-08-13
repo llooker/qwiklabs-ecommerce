@@ -117,6 +117,14 @@ view: order_items {
     value_format_name: "usd"
   }
 
+  measure: total_sales_email {
+    type: sum
+    sql: ${sale_price} ;;
+    value_format_name: usd
+#     filters: [users.traffic_source: "Email"]
+    filters: [users.traffic_source_is_email: "Yes"]
+  }
+
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [
