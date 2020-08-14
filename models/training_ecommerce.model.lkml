@@ -38,9 +38,27 @@ explore: inventory_items {
 }
 
 explore: order_items {
+  #sql_always_where: ${order_items.returned_raw} IS NULL
+  #AND ${order_items.status} = ‘complete’ ;;
+  #sql_always_having: ${order_items.count} > 5000 ;;
+#   always_filter: {
+#     filters: {
+#       field: ${order_items.created_date}
+#       value: "Before Today"
+#     }
+#   }
+#
+#   conditionally_filter: {
+#     filters: {
+#       field: ___________.____________
+#       value: "____ _ _____"
+#     }
+#     unless: [_____.__]
+#   }
   join: users {
     type: left_outer
     sql_on: ${order_items.user_id} = ${users.id} ;;
+    #sql_always_having: ${order_items.total_sales} > 200 ;;
     relationship: many_to_one
   }
 
