@@ -45,22 +45,36 @@ explore: inventory_items {
   }
 }
 
+datagroup: new_user {
+  sql_trigger: select max(created_at) from ${order_items.SQL_TABLE_NAME} ;;
+  max_cache_age: "1 hour"
+}
+datagroup: default_daily {
+  sql_trigger: select current_date ;;
+  max_cache_age: "24 hours"
+}
+
+datagroup: orders_dg {
+  sql_trigger: select max(created_at) from ${order_items.SQL_TABLE_NAME} ;;
+  max_cache_age: "4 hour"
+  }
+
 explore: order_items {
   join: users {
     type: left_outer
     sql_on: ${order_items.user_id} = ${users.id} ;;
     relationship: many_to_one
   }
-  ##Day 2 - Exc 1
+  ##Day 2 - Exc 6 - Task 1
 ##  sql_always_where:  ${returned_raw} IS NULL ;;
 ##  sql_always_having:  ${order_items.sale_price} > 200;;
 
-  ##Day 2 - Exc 2
+  ##Day 2 - Exc 6 - Task 2
   sql_always_where:  ${returned_date} IS NULL
   and ${status} = 'Complete';;
   sql_always_having: ${count > 50} ;;
 
-##Day 2 - Exc 3
+##Day 2 - Exc 6 - Task 3
 conditionally_filter: {
   filters: [created_date: "before today"]
   unless: [users.id]
