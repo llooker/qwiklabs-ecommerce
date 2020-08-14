@@ -51,6 +51,22 @@ explore: order_items {
     sql_on: ${order_items.user_id} = ${users.id} ;;
     relationship: many_to_one
   }
+  ##Day 2 - Exc 1
+##  sql_always_where:  ${returned_raw} IS NULL ;;
+##  sql_always_having:  ${order_items.sale_price} > 200;;
+
+  ##Day 2 - Exc 2
+  sql_always_where:  ${returned_date} IS NULL
+  and ${status} = 'Complete';;
+  sql_always_having: ${count > 50} ;;
+
+##Day 2 - Exc 3
+conditionally_filter: {
+  filters: [created_date: "before today"]
+  unless: [users.id]
+}
+
+
 
   join: inventory_items {
     type: left_outer
