@@ -130,7 +130,7 @@ view: order_items {
   measure: percentage_sales_email_source {
     type: number
     value_format_name: percent_2
-    sql: 1.0*${Avg_Sale_price}/NULLIF(${user_id},0) ;;
+    sql: 1.0*${total_sales_email}/NULLIF(${Avg_Sale_price},0) ;;
   }
 
   # ----- Sets of fields for drilling ------
